@@ -1,0 +1,19 @@
+trigger ContactTrigger on Contact (before insert, before update, After Insert) {
+
+    if (Trigger.isBefore) {
+        if (Trigger.isInsert) {
+            System.debug('Inside isInsert Before method of ContactTrigger');
+            contactTriggerHandler.updatingContactsOwner(Trigger.New);
+        }
+        if (Trigger.isUpdate) {
+            System.debug('Inside isUpdate Before method of ContactTrigger');
+            contactTriggerHandler.assignContactToCompaign(Trigger.New, Trigger.oldMap);
+        }
+    }
+    if (Trigger.isAfter) {
+        if (Trigger.isInsert) {
+            System.debug('Inside isInsert After method of ContactTrigger');
+            contactTriggerHandler.assignContactToCompaign(Trigger.New, NULL);
+        }
+    }
+}

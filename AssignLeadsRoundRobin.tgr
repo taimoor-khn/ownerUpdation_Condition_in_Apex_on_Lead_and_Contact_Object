@@ -1,0 +1,21 @@
+trigger AssignLeadsRoundRobin on Lead (before insert, before update, After Insert) {
+    if (Trigger.isBefore) {
+        if (Trigger.isInsert) {
+            System.debug('Inside isInsert Before method of AssignLeadsRoundRobin');
+            AssignLeadsRoundRobinClass.assignLeadsRoundRobin(Trigger.new);
+            AssignLeadsRoundRobinClass.assignUserLead(trigger.new);
+        }
+        if (Trigger.isUpdate) {
+            System.debug('Inside isUpdate Before method of AssignLeadsRoundRobin');
+            AssignLeadsRoundRobinClass.assignCampaign(Trigger.New, Trigger.oldMap);
+        }
+    }
+    if (Trigger.isAfter) {
+        if (Trigger.isInsert) {
+            System.debug('Inside isInsert After method of AssignLeadsRoundRobin');
+            AssignLeadsRoundRobinClass.assignCampaign(Trigger.New, NULL);
+        }
+    }
+    
+    
+}
